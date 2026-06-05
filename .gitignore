@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# TypeScript compiled output
+dist/
+
+# Mac files
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*

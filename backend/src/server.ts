@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes  from './routes/auth.routes'
 
 dotenv.config();
 
@@ -11,10 +12,13 @@ const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(express.json());
 
+
 // Health check
 app.get('/', (_req: Request, res: Response) => {
   res.json({ message: 'TaskFlow API is running! 🚀' });
 });
+
+app.use('/api/auth' , authRoutes) ; 
 
 // MongoDB connection
 mongoose

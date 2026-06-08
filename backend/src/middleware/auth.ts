@@ -7,7 +7,6 @@ export interface AuthRequest extends Request {
      userId? : string ;
 }
 
-
 interface JwtDecoded extends jwt.JwtPayload {
     id: string;
   }
@@ -19,7 +18,6 @@ const auth = (req:AuthRequest,res:Response,next : NextFunction)=>{
         res.status(401).json({message : "No token provided"}) ; 
         return  ; 
     }
-
     try {
           const decoded = jwt.verify(token,process.env.JWT_SECRET as string) as JwtDecoded;
           req.userId = decoded.id;

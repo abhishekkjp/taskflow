@@ -6,13 +6,16 @@ import { Types } from 'mongoose';
 
 
 const generateToken = (id:string) : string =>{
+     console.log(id) ; 
      return jwt.sign({id} , process.env.JWT_SECRET  as string , {expiresIn : '7d'}) ; 
 }
+
 
 // Register a new user 
 // POST /api/auth/register
 export const register = async (req:Request , res:Response) : Promise<void> =>{
      try {
+        console.log('request received') ; 
         const {name,email,password}  = req.body ; 
 
         const existing = await User.findOne({email}) ;
@@ -23,8 +26,6 @@ export const register = async (req:Request , res:Response) : Promise<void> =>{
    
         const user = await User.create({name,email,password}) ; 
         const token = generateToken(user._id.toString()) ;
-   
-   
         res.status(201).json({
            token , 
            user : {
@@ -44,19 +45,19 @@ export const register = async (req:Request , res:Response) : Promise<void> =>{
 export const login = async (req:Request, res:Response) : Promise<void> =>{
       try {
             const {email,password} = req.body ; 
-
-            const user = await User.findOne(email) ;
-            if(!email){
-                res.status(400).json({message:'Invalid credentails'}) ; 
-                return ; 
+            const user = await User.findOne({email}) ;
+            if(!user){
+               res.status(400).json({message:'Invalid credentails'}) ; 
+               return ; 
             } 
-          
-            const isMatch = await user?.comparepassword(password) ; 
+            
+            const isMatch = await user.comparepassword(password) ; 
             if(!isMatch){
                res.status(400).json({message : 'Invalid credential'}) ; 
                return ; 
             }
-         const token = generateToken((user?._id as Types.ObjectId).toString()) ; 
+            const token = generateToken((user!._id as Types.ObjectId).toString()) ; 
+            console.log(email,password) ; 
          res.json({
             token , 
             user : {
@@ -67,7 +68,7 @@ export const login = async (req:Request, res:Response) : Promise<void> =>{
          }) ; 
           return ; 
       } catch (error) {
-           res.status(500).json({message : 'Server error'}) ; 
+           res.status(500).json({message : 'Server error in login route'}) ; 
       }
 }  ; 
 

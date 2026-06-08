@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import authRoutes  from './routes/auth.routes'
+import authRoutes  from './routes/auth.routes' ; 
+import taskRoutes from './routes/task.routes' ; 
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get('/', (_req: Request, res: Response) => {
 });
 
 app.use('/api/auth' , authRoutes) ; 
+app.use('/api/tasks',taskRoutes) ; 
 
 // MongoDB connection
 mongoose

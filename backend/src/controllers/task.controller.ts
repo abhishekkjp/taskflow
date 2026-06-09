@@ -55,6 +55,8 @@ export const createTask = async (req:AuthRequest,res:Response) : Promise<void> =
 // @route  PUT /api/tasks/:id
 export const updateTask = async (req:AuthRequest,res:Response) : Promise<void> =>{
      try {
+          
+          console.log('request received for update') ; 
          const task = await Task.findOne({_id:req.params.id , owner:req.userId}) ;
         
          if(!task){
@@ -78,6 +80,8 @@ export const updateTask = async (req:AuthRequest,res:Response) : Promise<void> =
 
 export const deleteTask = async (req:AuthRequest,res:Response) : Promise<void> =>{
        try {
+          //  console.log("req. for deletion") ; 
+          //  console.log(req) ; 
             const task = await Task.findOne({_id:req.params.id , owner:req.userId}) ;
             if(!task){
                 res.status(404).json({message:"Task not found"}) ; 

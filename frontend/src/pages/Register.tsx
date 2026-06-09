@@ -19,9 +19,11 @@ const Register = () => {
     setError('');
     try {
       const data = await registerUser(name, email, password);
+      console.log(data) ; 
       login(data.token, data.user);
       navigate('/dashboard');
     } catch (err: any) {
+      console.log('registration failed') ; 
       setError(err.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);

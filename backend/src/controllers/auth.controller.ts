@@ -6,7 +6,7 @@ import { Types } from 'mongoose';
 
 
 const generateToken = (id:string) : string =>{
-     console.log(id) ; 
+    // console.log(id) ; 
      return jwt.sign({id} , process.env.JWT_SECRET  as string , {expiresIn : '7d'}) ; 
 }
 
@@ -15,7 +15,7 @@ const generateToken = (id:string) : string =>{
 // POST /api/auth/register
 export const register = async (req:Request , res:Response) : Promise<void> =>{
      try {
-        console.log('request received') ; 
+      //  console.log('request received') ; 
         const {name,email,password}  = req.body ; 
 
         const existing = await User.findOne({email}) ;

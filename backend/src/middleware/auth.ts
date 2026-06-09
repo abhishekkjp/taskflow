@@ -11,6 +11,8 @@ interface JwtDecoded extends jwt.JwtPayload {
     id: string;
   }
 
+
+
 const auth = (req:AuthRequest,res:Response,next : NextFunction)=>{
     const token = req.headers.authorization?.split(' ')[1] ; 
 
@@ -21,7 +23,7 @@ const auth = (req:AuthRequest,res:Response,next : NextFunction)=>{
     try {
           const decoded = jwt.verify(token,process.env.JWT_SECRET as string) as JwtDecoded;
           req.userId = decoded.id;
-        return  next() ; 
+          next() ; 
     } catch (error) {
         res.status(401).json({message : "Invalid token"}) ; 
     }
